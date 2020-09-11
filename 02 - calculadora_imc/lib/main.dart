@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -25,6 +26,32 @@ class _HomeState extends State<Home> {
           IconButton(
             icon: Icon(Icons.refresh),
             onPressed: () {},
+          )
+        ],
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Icon(
+            Icons.person_outline,
+            size: 120,
+            color: Colors.white,
+          ),
+          TextField(
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+                labelText: "Peso (kg)",
+                labelStyle: TextStyle(color: Colors.green, fontSize: 20)),
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.white, fontSize: 30),
+          ),
+          TextField(
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+                labelText: "Altura (cm)",
+                labelStyle: TextStyle(color: Colors.green, fontSize: 20)),
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.white, fontSize: 30),
           )
         ],
       ),
