@@ -16,7 +16,19 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List _toDoList = ["Andy", "Bebê Sofia"];
+  List _toDoList = [];
+  final _toDoController = TextEditingController();
+
+  void _addToDo() {
+    setState(() {
+      Map<String, dynamic> newToDo = Map();
+      newToDo["title"] = _toDoController.text;
+      newToDo["done"] = false;
+      _toDoController.text = "";
+      _toDoList.add(newToDo);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,6 +45,7 @@ class _HomeState extends State<Home> {
               children: [
                 Expanded(
                   child: TextField(
+                    controller: _toDoController,
                     decoration: InputDecoration(
                         labelText: "Nova Tarefa",
                         labelStyle: TextStyle(color: Colors.blueAccent)),
@@ -48,7 +61,9 @@ class _HomeState extends State<Home> {
                       style: TextStyle(fontSize: 30),
                     ),
                     textColor: Colors.white,
-                    onPressed: () {},
+                    onPressed: () {
+                      _addToDo();
+                    },
                   ),
                 ),
               ],
@@ -60,12 +75,19 @@ class _HomeState extends State<Home> {
                 itemCount: _toDoList.length,
                 itemBuilder: (context, index) {
                   return CheckboxListTile(
-                      title: Text(_toDoList[index]["title"]),
-                      value: _toDoList[index]["done"],
-                      secondary: CircleAvatar(
-                          child: Icon(
-                        _toDoList[index]["done"] ? Icons.check : Icons.error,
-                      )));
+                    title: Text(_toDoList[index]["title"]),
+                    value: _toDoList[index]["done"],
+                    secondary: CircleAvatar(
+                        child: Icon(_toDoList[index]["done"]
+                            ? Icons.check
+                            : Icons.error)),
+                    onChanged: (bool value) {
+                      print(value);
+                      setState(() {
+                        _toDoList[index]["done"] = value;
+                      });
+                    },
+                  );
                 }),
           ),
         ],
