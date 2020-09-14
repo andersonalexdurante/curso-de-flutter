@@ -26,6 +26,17 @@ class _HomeState extends State<Home> {
       newToDo["done"] = false;
       _toDoController.text = "";
       _toDoList.add(newToDo);
+      _saveData();
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _readData().then((data) {
+      setState(() {
+        _toDoList = json.decode(data);
+      });
     });
   }
 
@@ -85,6 +96,7 @@ class _HomeState extends State<Home> {
                       print(value);
                       setState(() {
                         _toDoList[index]["done"] = value;
+                        _saveData();
                       });
                     },
                   );
