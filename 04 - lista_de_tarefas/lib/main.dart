@@ -84,26 +84,40 @@ class _HomeState extends State<Home> {
             child: ListView.builder(
                 padding: EdgeInsets.only(top: 10),
                 itemCount: _toDoList.length,
-                itemBuilder: (context, index) {
-                  return CheckboxListTile(
-                    title: Text(_toDoList[index]["title"]),
-                    value: _toDoList[index]["done"],
-                    secondary: CircleAvatar(
-                        child: Icon(_toDoList[index]["done"]
-                            ? Icons.check
-                            : Icons.error)),
-                    onChanged: (bool value) {
-                      print(value);
-                      setState(() {
-                        _toDoList[index]["done"] = value;
-                        _saveData();
-                      });
-                    },
-                  );
-                }),
+                itemBuilder: buildItem),
           ),
         ],
       ),
+    );
+  }
+
+  Widget buildItem(context, index) {
+    return Dismissible(
+      key: Key(DateTime.now().millisecondsSinceEpoch.toString()),
+      background: Container(
+        color: Colors.red,
+        child: Align(
+          alignment: Alignment(-0.9, 00),
+          child: Icon(
+            Icons.delete_outline,
+            color: Colors.white,
+            size: 30,
+          ),
+        ),
+      ),
+      child: CheckboxListTile(
+          title: Text(_toDoList[index]["title"]),
+          value: _toDoList[index]["done"],
+          secondary: CircleAvatar(
+              child:
+                  Icon(_toDoList[index]["done"] ? Icons.check : Icons.error)),
+          onChanged: (bool value) {
+            print(value);
+            setState(() {
+              _toDoList[index]["done"] = value;
+              _saveData();
+            });
+          }),
     );
   }
 
